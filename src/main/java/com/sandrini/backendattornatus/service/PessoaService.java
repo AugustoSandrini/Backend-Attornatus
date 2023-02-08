@@ -1,7 +1,7 @@
 package com.sandrini.backendattornatus.service;
 
 import com.sandrini.backendattornatus.models.Pessoas;
-import com.sandrini.backendattornatus.repository.PessoasRespository;
+import com.sandrini.backendattornatus.repository.PessoasRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -12,9 +12,9 @@ import java.util.List;
 public class PessoaService {
 
     @Autowired
-    private final PessoasRespository pessoasRespository;
+    private final PessoasRepository pessoasRespository;
 
-    public PessoaService(PessoasRespository pessoasRespository) {
+    public PessoaService(PessoasRepository pessoasRespository) {
         this.pessoasRespository = pessoasRespository;
     }
 
@@ -38,9 +38,9 @@ public class PessoaService {
                     pessoas.setNome(newPessoa.getNome());
                     pessoas.setDataNascimento(newPessoa.getDataNascimento());
                     pessoas.setEndereco(newPessoa.getEndereco());
-                    return pessoasRespository.save(pessoas);
+                    return pessoasRespository.save(newPessoa);
                 })
-                .map(pessoas -> ResponseEntity.ok().body(pessoas))
+                .map( pessoa -> ResponseEntity.ok().body(pessoa))
                 .orElse(ResponseEntity.notFound().build());
     }
 
