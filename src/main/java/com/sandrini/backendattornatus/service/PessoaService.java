@@ -1,6 +1,8 @@
 package com.sandrini.backendattornatus.service;
 
+import com.sandrini.backendattornatus.models.Endereco;
 import com.sandrini.backendattornatus.models.Pessoas;
+import com.sandrini.backendattornatus.repository.EnderecoRepository;
 import com.sandrini.backendattornatus.repository.PessoasRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,11 +16,15 @@ public class PessoaService {
     @Autowired
     private final PessoasRepository pessoasRespository;
 
-    public PessoaService(PessoasRepository pessoasRespository) {
+    @Autowired
+    private final EnderecoRepository enderecoRepository;
+
+    public PessoaService(PessoasRepository pessoasRespository, EnderecoRepository enderecoRepository) {
         this.pessoasRespository = pessoasRespository;
+        this.enderecoRepository = enderecoRepository;
     }
 
-    public List<Pessoas> findAllPessoas() {
+    public List<Pessoas> listAllPessoas() {
         return pessoasRespository.findAll();
     }
 
@@ -26,7 +32,7 @@ public class PessoaService {
         return pessoasRespository.save(pessoa);
     }
 
-    public ResponseEntity<Pessoas> findPessoaById(Long id) {
+    public ResponseEntity<Pessoas> listPessoaById(Long id) {
         return pessoasRespository.findById(id)
                 .map(pessoa -> ResponseEntity.ok().body(pessoa))
                 .orElse(ResponseEntity.notFound().build());
@@ -40,7 +46,7 @@ public class PessoaService {
                     pessoas.setEndereco(newPessoa.getEndereco());
                     return pessoasRespository.save(newPessoa);
                 })
-                .map( pessoa -> ResponseEntity.ok().body(pessoa))
+                .map(pessoa -> ResponseEntity.ok().body(pessoa))
                 .orElse(ResponseEntity.notFound().build());
     }
 

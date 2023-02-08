@@ -19,21 +19,21 @@ public class EnderecoService {
         this.enderecoRepository = enderecoRepository;
     }
 
-    public List<Endereco> listAllEnderecos(){
+    public List<Endereco> listAllEnderecos() {
         return enderecoRepository.findAll();
     }
 
-    public Endereco createEndereco(Endereco endereco){
+    public Endereco createEndereco(Endereco endereco) {
         return enderecoRepository.save(endereco);
     }
 
-    public ResponseEntity<Endereco> listEnderecoById(Long id){
+    public ResponseEntity<Endereco> listEnderecoById(Long id) {
         return enderecoRepository.findById(id)
                 .map(endereco -> ResponseEntity.ok().body(endereco))
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    public ResponseEntity<Endereco> updateEndereco(Endereco newEndereco, Long id){
+    public ResponseEntity<Endereco> updateEndereco(Endereco newEndereco, Long id) {
         return enderecoRepository.findById(id)
                 .map(endereco -> {
                     endereco.setLogradouro(newEndereco.getLogradouro());
@@ -47,7 +47,7 @@ public class EnderecoService {
 
     }
 
-    public ResponseEntity<Object> deleteEndereco(Long id){
+    public ResponseEntity<Object> deleteEndereco(Long id) {
         return enderecoRepository.findById(id)
                 .map(endereco -> {
                     enderecoRepository.delete(endereco);

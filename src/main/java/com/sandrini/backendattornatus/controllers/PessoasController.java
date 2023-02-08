@@ -17,12 +17,12 @@ public class PessoasController {
 
     @GetMapping
     public List<Pessoas> listarPessoas() {
-        return pessoaService.findAllPessoas();
+        return pessoaService.listAllPessoas();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Pessoas> listaPessoaById(@PathVariable("id") Long id) {
-        return pessoaService.findPessoaById(id);
+    public ResponseEntity<Pessoas> listarPessoaById(@PathVariable("id") Long id) {
+        return pessoaService.listPessoaById(id);
     }
 
     @PostMapping
@@ -37,6 +37,6 @@ public class PessoasController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deletePessoa(@PathVariable("id") Long id) {
-       return pessoaService.deletePessoa(id);
+        return pessoaService.deletePessoa(id);
     }
 }
