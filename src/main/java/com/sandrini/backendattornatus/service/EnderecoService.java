@@ -12,7 +12,6 @@ import java.util.List;
 @Service
 public class EnderecoService {
 
-    @Autowired
     private final EnderecoRepository enderecoRepository;
 
     public EnderecoService(EnderecoRepository enderecoRepository) {
@@ -27,11 +26,6 @@ public class EnderecoService {
         return enderecoRepository.save(endereco);
     }
 
-    public ResponseEntity<Endereco> listEnderecoById(Long id) {
-        return enderecoRepository.findById(id)
-                .map(endereco -> ResponseEntity.ok().body(endereco))
-                .orElse(ResponseEntity.notFound().build());
-    }
 
     public ResponseEntity<Endereco> updateEndereco(Endereco newEndereco, Long id) {
         return enderecoRepository.findById(id)
@@ -40,11 +34,22 @@ public class EnderecoService {
                     endereco.setCep(newEndereco.getCep());
                     endereco.setNumero(newEndereco.getNumero());
                     endereco.setCidade(newEndereco.getCidade());
-                    return enderecoRepository.save(newEndereco);
+                    return enderecoRepository.save(endereco);
                 })
                 .map(endereco -> ResponseEntity.ok().body(endereco))
                 .orElse(ResponseEntity.notFound().build());
+    }
 
+    public Endereco saveOrUpdateEndereco(Endereco newEndereco) {
+
+        return enderecoRepository.findByCep(newEndereco.getCep())
+                .map(endereco -> {
+                    endereco.setLogradouro(newEndereco.getLogradouro());
+                    endereco.setNumero(newEndereco.getNumero());
+                    endereco.setCidade(newEndereco.getCidade());
+                    return enderecoRepository.save(endereco);
+                })
+                .orElse(ResponseEntity.ok().body(enderecoRepository.save(newEndereco)).getBody());
     }
 
     public ResponseEntity<Object> deleteEndereco(Long id) {

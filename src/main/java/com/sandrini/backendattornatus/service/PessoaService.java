@@ -13,15 +13,10 @@ import java.util.List;
 @Service
 public class PessoaService {
 
-    @Autowired
     private final PessoasRepository pessoasRespository;
 
-    @Autowired
-    private final EnderecoRepository enderecoRepository;
-
-    public PessoaService(PessoasRepository pessoasRespository, EnderecoRepository enderecoRepository) {
+    public PessoaService(PessoasRepository pessoasRespository) {
         this.pessoasRespository = pessoasRespository;
-        this.enderecoRepository = enderecoRepository;
     }
 
     public List<Pessoas> listAllPessoas() {
@@ -40,14 +35,21 @@ public class PessoaService {
 
     public ResponseEntity<Pessoas> updatePessoa(Pessoas newPessoa, Long id) {
         return pessoasRespository.findById(id)
-                .map(pessoas -> {
-                    pessoas.setNome(newPessoa.getNome());
-                    pessoas.setDataNascimento(newPessoa.getDataNascimento());
-                    pessoas.setEndereco(newPessoa.getEndereco());
-                    return pessoasRespository.save(newPessoa);
+                .map(pessoa -> {
+                    pessoa.setNome(newPessoa.getNome());
+                    pessoa.setDataNascimento(newPessoa.getDataNascimento());
+                    updateEndereco(newPessoa, pessoa);
+                    return pessoasRespository.save(pessoa);
                 })
                 .map(pessoa -> ResponseEntity.ok().body(pessoa))
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    private static void updateEndereco(Pessoas newPessoa, Pessoas pessoa) {
+        pessoa.getEndereco().setLogradouro(newPessoa.getEndereco().getLogradouro());
+        pessoa.getEndereco().setCep(newPessoa.getEndereco().getCep());
+        pessoa.getEndereco().setNumero(newPessoa.getEndereco().getNumero());
+        pessoa.getEndereco().setCidade(newPessoa.getEndereco().getCidade());
     }
 
     public ResponseEntity<Object> deletePessoa(Long id) {

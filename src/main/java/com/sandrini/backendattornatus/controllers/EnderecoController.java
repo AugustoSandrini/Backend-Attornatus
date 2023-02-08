@@ -21,13 +21,17 @@ public class EnderecoController {
         return enderecoService.listAllEnderecos();
     }
 
+    /*
     @GetMapping("/{id}")
     public ResponseEntity<Endereco> listEnderecoById(@PathVariable("id") Long id) {
-        return enderecoService.listEnderecoById(id);
+        return enderecoService.findEnderecoById(id);
     }
+     */
+
+
 
     @PostMapping
-    public Endereco createEndereco(Endereco endereco) {
+    public Endereco createEndereco(@RequestBody Endereco endereco) {
         return enderecoService.createEndereco(endereco);
     }
 
