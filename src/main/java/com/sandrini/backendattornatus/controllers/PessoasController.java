@@ -3,26 +3,26 @@ package com.sandrini.backendattornatus.controllers;
 import com.sandrini.backendattornatus.models.Pessoas;
 import com.sandrini.backendattornatus.service.PessoaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/pessoas")
-public class PessoaController {
+public class PessoasController {
 
     @Autowired
     private PessoaService pessoaService;
 
     @GetMapping
-    public List<Pessoas> listaPessoas() {
-        return pessoaService.findAll();
+    public List<Pessoas> listarPessoas() {
+        return pessoaService.findAllPessoas();
     }
 
     @GetMapping("/{id}")
-    public Optional<Pessoas> listaPessoaId(@PathVariable("id") Long id) {
-        return pessoaService.findById(id);
+    public ResponseEntity<Pessoas> listaPessoaById(@PathVariable("id") Long id) {
+        return pessoaService.findPessoaById(id);
     }
 
     @PostMapping
@@ -31,12 +31,12 @@ public class PessoaController {
     }
 
     @PutMapping("/{id}")
-    public Pessoas updatePessoa(@RequestBody Pessoas pessoa) {
-        return pessoaService.updatePessoa(pessoa);
+    public ResponseEntity<Pessoas> updatePessoa(@PathVariable("id") Long id, @RequestBody Pessoas pessoa) {
+        return pessoaService.updatePessoa(pessoa, id);
     }
 
     @DeleteMapping("/{id}")
-    public void deletePessoa(@PathVariable("id") Long id) {
-        pessoaService.deletePessoa(id);
+    public ResponseEntity<Object> deletePessoa(@PathVariable("id") Long id) {
+       return pessoaService.deletePessoa(id);
     }
 }

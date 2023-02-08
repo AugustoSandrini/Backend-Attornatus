@@ -3,12 +3,10 @@ package com.sandrini.backendattornatus.service;
 import com.sandrini.backendattornatus.models.Pessoas;
 import com.sandrini.backendattornatus.repository.PessoasRespository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PessoaService {
@@ -20,35 +18,41 @@ public class PessoaService {
         this.pessoasRespository = pessoasRespository;
     }
 
-    public List<Pessoas> findAll() {
+    public List<Pessoas> findAllPessoas() {
         return pessoasRespository.findAll();
-    }
-
-    public Optional<Pessoas> findById(Long id) {
-        return pessoasRespository.findById(id);
     }
 
     public Pessoas createPessoa(Pessoas pessoa) {
         return pessoasRespository.save(pessoa);
     }
 
-    public Pessoas updatePessoa(Pessoas newPessoa) {
-        return pessoasRespository.findById(newPessoa.getId())
+    public ResponseEntity<Pessoas> findPessoaById(Long id) {
+        return pessoasRespository.findById(id)
+                .map(pessoa -> ResponseEntity.ok().body(pessoa))
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    public ResponseEntity<Pessoas> updatePessoa(Pessoas newPessoa, Long id) {
+        return pessoasRespository.findById(id)
                 .map(pessoas -> {
                     pessoas.setNome(newPessoa.getNome());
                     pessoas.setDataNascimento(newPessoa.getDataNascimento());
                     pessoas.setEndereco(newPessoa.getEndereco());
                     return pessoasRespository.save(pessoas);
                 })
-                .orElseGet(() -> {
-                    newPessoa.setId(newPessoa.getId());
-                    return pessoasRespository.save(newPessoa);
-                });
+                .map(pessoas -> ResponseEntity.ok().body(pessoas))
+                .orElse(ResponseEntity.notFound().build());
     }
 
-    public void deletePessoa(Long id) {
-        pessoasRespository.deleteById(id);
+    public ResponseEntity<Object> deletePessoa(Long id) {
+        return pessoasRespository.findById(id)
+                .map(pessoa -> {
+                    pessoasRespository.delete(pessoa);
+                    return ResponseEntity.ok().build();
+                })
+                .orElse(ResponseEntity.notFound().build());
     }
-
-
 }
+
+
+
