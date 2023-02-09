@@ -22,10 +22,8 @@ public class PessoaService {
         pessoasRespository.save(pessoa);
     }
 
-    public void listPessoaById(Long id) {
-        pessoasRespository.findById(id)
-                .map(pessoa -> ResponseEntity.ok().body(pessoa));
-        ResponseEntity.notFound().build();
+    public void findPessoaById(Long id) {
+        pessoasRespository.findById(id);
     }
 
     public void updatePessoa(Pessoas newPessoa, Long id) {
@@ -35,9 +33,7 @@ public class PessoaService {
                     pessoa.setDataNascimento(newPessoa.getDataNascimento());
                     updateEndereco(newPessoa, pessoa);
                     return pessoasRespository.save(pessoa);
-                })
-                .map(pessoa -> ResponseEntity.ok().body(pessoa))
-                .orElse(ResponseEntity.notFound().build()).getBody();
+                });
     }
 
     private static void updateEndereco(Pessoas newPessoa, Pessoas pessoa) {
@@ -48,12 +44,7 @@ public class PessoaService {
     }
 
     public void deletePessoa(Long id) {
-        pessoasRespository.findById(id)
-                .map(pessoa -> {
-                    pessoasRespository.delete(pessoa);
-                    return ResponseEntity.ok().build();
-                });
-        ResponseEntity.notFound().build();
+        pessoasRespository.deleteById(id);
     }
 }
 

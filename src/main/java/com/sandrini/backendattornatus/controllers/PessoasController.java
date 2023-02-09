@@ -29,7 +29,7 @@ public class PessoasController {
     @GetMapping("/{id}")
     public ResponseEntity<Pessoas> listarPessoaById(@PathVariable("id") Long id) {
         try {
-            pessoaService.listPessoaById(id);
+            pessoaService.findPessoaById(id);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception exception) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -57,7 +57,7 @@ public class PessoasController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deletePessoa(@PathVariable("id") Long id) {
+    public ResponseEntity<Object> deletePessoa(Long id) {
         try{
             pessoaService.deletePessoa(id);
             return new ResponseEntity<>(HttpStatus.OK);
