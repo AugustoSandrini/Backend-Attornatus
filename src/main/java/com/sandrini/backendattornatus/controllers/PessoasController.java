@@ -4,10 +4,12 @@ import com.sandrini.backendattornatus.models.Pessoas;
 import com.sandrini.backendattornatus.service.PessoaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/pessoas")
@@ -49,9 +51,8 @@ public class PessoasController {
     @PutMapping("/{id}")
     public ResponseEntity<Pessoas> updatePessoa(@PathVariable("id") Long id, @RequestBody Pessoas pessoa) {
         try {
-            pessoaService.updatePessoa(pessoa, id);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (Exception exception) {
+            return ResponseEntity.ok().body(pessoaService.updatePessoa(pessoa, id));
+        }catch (Exception exception){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
