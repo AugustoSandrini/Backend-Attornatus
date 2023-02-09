@@ -1,14 +1,9 @@
 package com.sandrini.backendattornatus.service;
 
-import com.sandrini.backendattornatus.models.Endereco;
 import com.sandrini.backendattornatus.models.Pessoas;
-import com.sandrini.backendattornatus.repository.EnderecoRepository;
 import com.sandrini.backendattornatus.repository.PessoasRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class PessoaService {
@@ -19,22 +14,22 @@ public class PessoaService {
         this.pessoasRespository = pessoasRespository;
     }
 
-    public List<Pessoas> listAllPessoas() {
-        return pessoasRespository.findAll();
+    public void listAllPessoas() {
+        pessoasRespository.findAll();
     }
 
-    public Pessoas createPessoa(Pessoas pessoa) {
-        return pessoasRespository.save(pessoa);
+    public void createPessoa(Pessoas pessoa) {
+        pessoasRespository.save(pessoa);
     }
 
-    public ResponseEntity<Pessoas> listPessoaById(Long id) {
-        return pessoasRespository.findById(id)
-                .map(pessoa -> ResponseEntity.ok().body(pessoa))
-                .orElse(ResponseEntity.notFound().build());
+    public void listPessoaById(Long id) {
+        pessoasRespository.findById(id)
+                .map(pessoa -> ResponseEntity.ok().body(pessoa));
+        ResponseEntity.notFound().build();
     }
 
-    public ResponseEntity<Pessoas> updatePessoa(Pessoas newPessoa, Long id) {
-        return pessoasRespository.findById(id)
+    public void updatePessoa(Pessoas newPessoa, Long id) {
+        pessoasRespository.findById(id)
                 .map(pessoa -> {
                     pessoa.setNome(newPessoa.getNome());
                     pessoa.setDataNascimento(newPessoa.getDataNascimento());
@@ -42,7 +37,7 @@ public class PessoaService {
                     return pessoasRespository.save(pessoa);
                 })
                 .map(pessoa -> ResponseEntity.ok().body(pessoa))
-                .orElse(ResponseEntity.notFound().build());
+                .orElse(ResponseEntity.notFound().build()).getBody();
     }
 
     private static void updateEndereco(Pessoas newPessoa, Pessoas pessoa) {
@@ -52,13 +47,13 @@ public class PessoaService {
         pessoa.getEndereco().setCidade(newPessoa.getEndereco().getCidade());
     }
 
-    public ResponseEntity<Object> deletePessoa(Long id) {
-        return pessoasRespository.findById(id)
+    public void deletePessoa(Long id) {
+        pessoasRespository.findById(id)
                 .map(pessoa -> {
                     pessoasRespository.delete(pessoa);
                     return ResponseEntity.ok().build();
-                })
-                .orElse(ResponseEntity.notFound().build());
+                });
+        ResponseEntity.notFound().build();
     }
 }
 

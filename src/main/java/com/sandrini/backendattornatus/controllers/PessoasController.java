@@ -3,6 +3,7 @@ package com.sandrini.backendattornatus.controllers;
 import com.sandrini.backendattornatus.models.Pessoas;
 import com.sandrini.backendattornatus.service.PessoaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,27 +17,52 @@ public class PessoasController {
     private PessoaService pessoaService;
 
     @GetMapping
-    public List<Pessoas> listarPessoas() {
-        return pessoaService.listAllPessoas();
+    public ResponseEntity<List<Pessoas>> listarPessoas() {
+        try {
+            pessoaService.listAllPessoas();
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception exception) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Pessoas> listarPessoaById(@PathVariable("id") Long id) {
-        return pessoaService.listPessoaById(id);
+        try {
+            pessoaService.listPessoaById(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception exception) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @PostMapping
-    public Pessoas createPessoa(@RequestBody Pessoas pessoa) {
-        return pessoaService.createPessoa(pessoa);
+    public ResponseEntity<Pessoas> createPessoa(@RequestBody Pessoas pessoa) {
+        try {
+            pessoaService.createPessoa(pessoa);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } catch (Exception exception) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Pessoas> updatePessoa(@PathVariable("id") Long id, @RequestBody Pessoas pessoa) {
-        return pessoaService.updatePessoa(pessoa, id);
+        try {
+            pessoaService.updatePessoa(pessoa, id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception exception) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deletePessoa(@PathVariable("id") Long id) {
-       return pessoaService.deletePessoa(id);
+        try{
+            pessoaService.deletePessoa(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }catch (Exception exception){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
     }
 }
