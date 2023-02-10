@@ -3,8 +3,9 @@ package com.sandrini.backendattornatus.service;
 
 import com.sandrini.backendattornatus.models.Endereco;
 import com.sandrini.backendattornatus.repository.EnderecoRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class EnderecoService {
@@ -15,15 +16,15 @@ public class EnderecoService {
         this.enderecoRepository = enderecoRepository;
     }
 
-    public void listAllEnderecos() {
-        enderecoRepository.findAll();
+    public List<Endereco> listarEnderecos() {
+        return enderecoRepository.findAll();
     }
 
-    public void createEndereco(Endereco endereco) {
-        enderecoRepository.save(endereco);
+    public Endereco criarEndereco(Endereco endereco) {
+        return enderecoRepository.save(endereco);
     }
 
-    public void updateEndereco(Endereco newEndereco, Long id) {
+    public Endereco atualizaEndereco(Endereco newEndereco, Long id) {
         enderecoRepository.findById(id)
                 .map(endereco -> {
                     endereco.setLogradouro(newEndereco.getLogradouro());
@@ -32,9 +33,10 @@ public class EnderecoService {
                     endereco.setCidade(newEndereco.getCidade());
                     return enderecoRepository.save(endereco);
                 });
+        return newEndereco;
     }
 
-    public void deleteEndereco(Long id) {
+    public void deletaEndereco(Long id) {
         enderecoRepository.deleteById(id);
     }
 }
