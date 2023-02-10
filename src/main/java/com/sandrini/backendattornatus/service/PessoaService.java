@@ -16,37 +16,37 @@ public class PessoaService {
         this.pessoasRespository = pessoasRespository;
     }
 
-    public List<Pessoas> listAllPessoas() {
+    public List<Pessoas> listarPessoas() {
         return pessoasRespository.findAll();
     }
 
-    public Pessoas createPessoa(Pessoas pessoa) {
-       return pessoasRespository.save(pessoa);
+    public Pessoas criarPessoa(Pessoas pessoa) {
+        return pessoasRespository.save(pessoa);
     }
 
-    public Optional<Pessoas> findPessoaById(Long id) {
+    public Optional<Pessoas> acharPessoaPorId(Long id) {
         return pessoasRespository.findById(id);
     }
 
-    public Pessoas updatePessoa(Pessoas newPessoa, Long id) {
+    public Pessoas atualizaPessoa(Pessoas newPessoa, Long id) {
         pessoasRespository.findById(id)
                 .map(pessoa -> {
                     pessoa.setNome(newPessoa.getNome());
                     pessoa.setDataNascimento(newPessoa.getDataNascimento());
-                    updateEndereco(newPessoa, pessoa);
+                    atualizaEndereco(newPessoa, pessoa);
                     return pessoasRespository.save(pessoa);
                 });
         return newPessoa;
     }
 
-    private static void updateEndereco(Pessoas newPessoa, Pessoas pessoa) {
+    private static void atualizaEndereco(Pessoas newPessoa, Pessoas pessoa) {
         pessoa.getEndereco().setLogradouro(newPessoa.getEndereco().getLogradouro());
         pessoa.getEndereco().setCep(newPessoa.getEndereco().getCep());
         pessoa.getEndereco().setNumero(newPessoa.getEndereco().getNumero());
         pessoa.getEndereco().setCidade(newPessoa.getEndereco().getCidade());
     }
 
-    public void deletePessoa(Long id) {
+    public void deletaPessoa(Long id) {
         pessoasRespository.deleteById(id);
     }
 }
