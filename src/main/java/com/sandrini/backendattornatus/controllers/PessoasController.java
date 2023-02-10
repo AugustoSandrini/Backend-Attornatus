@@ -1,5 +1,6 @@
 package com.sandrini.backendattornatus.controllers;
 
+import com.sandrini.backendattornatus.models.Endereco;
 import com.sandrini.backendattornatus.models.Pessoas;
 import com.sandrini.backendattornatus.service.PessoaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,15 @@ public class PessoasController {
         } catch (Exception exception) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping("/{id}/enderecos")
+    public ResponseEntity<Optional<Endereco>> listarEnderecosPorPessoa(@PathVariable("id") Long id){
+       try {
+           return ResponseEntity.ok().body(pessoaService.listarEnderecoPorPessoa(id));
+       }catch (Exception exception){
+           return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+       }
     }
 
     @PostMapping

@@ -1,5 +1,6 @@
 package com.sandrini.backendattornatus.service;
 
+import com.sandrini.backendattornatus.models.Endereco;
 import com.sandrini.backendattornatus.models.Pessoas;
 import com.sandrini.backendattornatus.repository.PessoasRepository;
 import org.springframework.stereotype.Service;
@@ -48,6 +49,11 @@ public class PessoaService {
 
     public void deletaPessoa(Long id) {
         pessoasRespository.deleteById(id);
+    }
+
+    public Optional<Endereco> listarEnderecoPorPessoa(Long id){
+        return pessoasRespository.findById(id)
+                 .map(Pessoas::getEndereco);
     }
 }
 
