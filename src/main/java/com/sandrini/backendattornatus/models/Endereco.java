@@ -3,7 +3,6 @@ package com.sandrini.backendattornatus.models;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.engine.internal.Cascade;
 
 
 @Entity
@@ -25,5 +24,4 @@ public class Endereco {
     private String cidade;
 
     private boolean enderecoPrincial;
-
 }

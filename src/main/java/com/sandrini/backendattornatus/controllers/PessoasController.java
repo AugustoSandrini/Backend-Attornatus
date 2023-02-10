@@ -37,12 +37,12 @@ public class PessoasController {
     }
 
     @GetMapping("/{id}/enderecos")
-    public ResponseEntity<Optional<Endereco>> listarEnderecosPorPessoa(@PathVariable("id") Long id){
-       try {
-           return ResponseEntity.ok().body(pessoaService.listarEnderecoPorPessoa(id));
-       }catch (Exception exception){
-           return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-       }
+    public ResponseEntity<Optional<Endereco>> listarEnderecosPorPessoa(@PathVariable("id") Long id) {
+        try {
+            return ResponseEntity.ok().body(pessoaService.listarEnderecoPorPessoa(id));
+        } catch (Exception exception) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @PostMapping

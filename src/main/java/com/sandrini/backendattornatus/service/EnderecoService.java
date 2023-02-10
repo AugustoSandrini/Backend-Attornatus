@@ -4,16 +4,18 @@ package com.sandrini.backendattornatus.service;
 import com.sandrini.backendattornatus.models.Endereco;
 import com.sandrini.backendattornatus.models.Pessoas;
 import com.sandrini.backendattornatus.repository.EnderecoRepository;
+import com.sandrini.backendattornatus.repository.PessoasRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 
 @Service
 public class EnderecoService {
 
     private final EnderecoRepository enderecoRepository;
 
-    public EnderecoService(EnderecoRepository enderecoRepository) {
+    public EnderecoService(EnderecoRepository enderecoRepository, PessoasRepository pessoasRepository) {
         this.enderecoRepository = enderecoRepository;
     }
 
