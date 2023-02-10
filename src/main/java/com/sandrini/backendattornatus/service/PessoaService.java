@@ -2,6 +2,7 @@ package com.sandrini.backendattornatus.service;
 
 import com.sandrini.backendattornatus.models.Endereco;
 import com.sandrini.backendattornatus.models.Pessoas;
+import com.sandrini.backendattornatus.repository.EnderecoRepository;
 import com.sandrini.backendattornatus.repository.PessoasRepository;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,7 @@ public class PessoaService {
 
     private final PessoasRepository pessoasRespository;
 
-    public PessoaService(PessoasRepository pessoasRespository) {
+    public PessoaService(PessoasRepository pessoasRespository, EnderecoRepository enderecoRepository) {
         this.pessoasRespository = pessoasRespository;
     }
 
@@ -34,7 +35,7 @@ public class PessoaService {
                 .map(pessoa -> {
                     pessoa.setNome(newPessoa.getNome());
                     pessoa.setDataNascimento(newPessoa.getDataNascimento());
-                    atualizaEndereco(newPessoa, pessoa);
+                    //atualizaEndereco(newPessoa, pessoa);
                     return pessoasRespository.save(pessoa);
                 });
         return newPessoa;
@@ -50,10 +51,9 @@ public class PessoaService {
     public void deletaPessoa(Long id) {
         pessoasRespository.deleteById(id);
     }
-
-    public Optional<Endereco> listarEnderecoPorPessoa(Long id){
+    public Optional<Endereco> listarEnderecoPorPessoa(Long id) {
         return pessoasRespository.findById(id)
-                 .map(Pessoas::getEndereco);
+                .map(Pessoas::getEndereco);
     }
 }
 

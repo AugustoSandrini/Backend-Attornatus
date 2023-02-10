@@ -2,6 +2,7 @@ package com.sandrini.backendattornatus.controllers;
 
 
 import com.sandrini.backendattornatus.models.Endereco;
+import com.sandrini.backendattornatus.models.Pessoas;
 import com.sandrini.backendattornatus.service.EnderecoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

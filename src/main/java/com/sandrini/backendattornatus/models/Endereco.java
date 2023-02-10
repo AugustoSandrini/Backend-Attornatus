@@ -3,6 +3,7 @@ package com.sandrini.backendattornatus.models;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.engine.internal.Cascade;
 
 
 @Entity
@@ -14,6 +15,7 @@ public class Endereco {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
     private String logradouro;
 
     private String cep;
@@ -21,5 +23,7 @@ public class Endereco {
     private int numero;
 
     private String cidade;
+
+    private boolean enderecoPrincial;
 
 }
