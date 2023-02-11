@@ -35,24 +35,27 @@ public class PessoaService {
                 .map(pessoa -> {
                     pessoa.setNome(newPessoa.getNome());
                     pessoa.setDataNascimento(newPessoa.getDataNascimento());
-                    atualizaEndereco(newPessoa, pessoa);
+                    pessoa.setEndereco(newPessoa.getEndereco());
+                    //atualizaEndereco(newPessoa, pessoa);
                     return pessoasRespository.save(pessoa);
                 });
         return newPessoa;
     }
 
+    /*
     private static void atualizaEndereco(Pessoas newPessoa, Pessoas pessoa) {
         pessoa.getEndereco().setLogradouro(newPessoa.getEndereco().getLogradouro());
         pessoa.getEndereco().setCep(newPessoa.getEndereco().getCep());
         pessoa.getEndereco().setNumero(newPessoa.getEndereco().getNumero());
         pessoa.getEndereco().setCidade(newPessoa.getEndereco().getCidade());
     }
+     */
 
     public void deletaPessoa(Long id) {
         pessoasRespository.deleteById(id);
     }
 
-    public Optional<Endereco> listarEnderecoPorPessoa(Long id) {
+    public Optional<Endereco> listarEnderecosPorPessoa(Long id) {
         return pessoasRespository.findById(id)
                 .map(Pessoas::getEndereco);
     }
