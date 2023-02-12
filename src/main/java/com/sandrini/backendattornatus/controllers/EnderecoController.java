@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/enderecos")
@@ -27,10 +28,10 @@ public class EnderecoController {
         }
     }
 
-    @PostMapping("/{id}")
-    public ResponseEntity<Object> criarEndereco(@PathVariable("id") Long id, @RequestBody Pessoas pessoa) {
+    @PostMapping("/{id}/")
+    public ResponseEntity<Long> criarEndereco(@PathVariable("id") Long id, @RequestBody Endereco endereco) {
         try {
-            return ResponseEntity.ok().body(enderecoService.criarEndereco(id, pessoa));
+            return ResponseEntity.ok().body(enderecoService.criarEnderecoParaPessoa(id, endereco));
         } catch (Exception exception) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

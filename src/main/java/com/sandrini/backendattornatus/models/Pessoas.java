@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Getter
@@ -18,7 +19,7 @@ public class Pessoas {
 
     private LocalDate dataNascimento;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Endereco endereco;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Endereco> endereco;
 
 }

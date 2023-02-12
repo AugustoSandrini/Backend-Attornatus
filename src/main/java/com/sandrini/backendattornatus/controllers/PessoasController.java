@@ -37,11 +37,20 @@ public class PessoasController {
     }
 
     @GetMapping("/{id}/enderecos")
-    public ResponseEntity<Optional<Endereco>> listarEnderecosPorPessoa(@PathVariable("id") Long id) {
+    public ResponseEntity<Optional<List<Endereco>>> listarEnderecosPessoa(@PathVariable("id") Long id) {
         try {
-            return ResponseEntity.ok().body(pessoaService.listarEnderecosPorPessoa(id));
+            return ResponseEntity.ok().body(pessoaService.listarEnderecosPessoa(id));
         } catch (Exception exception) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/{id}/endereco-principal")
+    public ResponseEntity<Optional<Endereco>> listarEnderecoPrincipal(@PathVariable("id") Long id) {
+        try {
+            return ResponseEntity.ok().body(pessoaService.listarEnderecoPrincipal(id));
+        } catch (Exception exception) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
