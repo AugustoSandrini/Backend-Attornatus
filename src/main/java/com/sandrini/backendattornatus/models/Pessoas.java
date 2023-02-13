@@ -20,6 +20,6 @@ public class Pessoas {
     private LocalDate dataNascimento;
 
     @OneToMany(cascade = CascadeType.ALL)
-    private List<Endereco> endereco;
+    private List<Endereco> enderecos;
 
 }

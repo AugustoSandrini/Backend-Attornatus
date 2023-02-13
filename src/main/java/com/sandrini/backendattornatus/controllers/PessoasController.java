@@ -54,6 +54,17 @@ public class PessoasController {
         }
     }
 
+
+
+    @PostMapping("add-endereco/{id}")
+    public ResponseEntity<Endereco> criarEndereco(@PathVariable("id") Long id, @RequestBody Endereco newEndereco) {
+        try {
+            return ResponseEntity.ok().body(pessoaService.criarEnderecoParaPessoa(id ,newEndereco));
+        } catch (Exception exception) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @PostMapping
     public ResponseEntity<Pessoas> criarPessoa(@RequestBody Pessoas pessoa) {
         try {

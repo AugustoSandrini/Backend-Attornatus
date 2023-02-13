@@ -2,7 +2,7 @@ package com.sandrini.backendattornatus.service;
 
 import com.sandrini.backendattornatus.models.Endereco;
 import com.sandrini.backendattornatus.models.Pessoas;
-import com.sandrini.backendattornatus.repository.PessoasRepository;
+import com.sandrini.backendattornatus.repository.PessoaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,64 +12,61 @@ import java.util.stream.Stream;
 @Service
 public class PessoaService {
 
-    private final PessoasRepository pessoasRespository;
+    private final PessoaRepository pessoaRepository;
 
-    public PessoaService(PessoasRepository pessoasRespository) {
-        this.pessoasRespository = pessoasRespository;
+    public PessoaService(PessoaRepository pessoasRespository) {
+        this.pessoaRepository = pessoasRespository;
     }
 
     public List<Pessoas> listarPessoas() {
-        return pessoasRespository.findAll();
+        return pessoaRepository.findAll();
     }
 
     public Pessoas criarPessoa(Pessoas pessoa) {
-        return pessoasRespository.save(pessoa);
+        return pessoaRepository.save(pessoa);
     }
 
     public Optional<Pessoas> acharPessoaPorId(Long id) {
-        return pessoasRespository.findById(id);
+        return pessoaRepository.findById(id);
     }
 
     public Pessoas atualizaPessoa(Pessoas newPessoa, Long id) {
-        pessoasRespository.findById(id)
+        pessoaRepository.findById(id)
                 .map(pessoa -> {
                     pessoa.setNome(newPessoa.getNome());
                     pessoa.setDataNascimento(newPessoa.getDataNascimento());
-                    pessoa.getEndereco().clear();
-                    pessoa.getEndereco().addAll(newPessoa.getEndereco());
-                    //atualizaEndereco(newPessoa, pessoa);
-                    return pessoasRespository.save(pessoa);
+                    pessoa.getEnderecos().clear();
+                    pessoa.getEnderecos().addAll(newPessoa.getEnderecos());
+                    return pessoaRepository.save(pessoa);
                 });
         return newPessoa;
     }
 
-    /*
-
-    private static void atualizaEndereco(Pessoas newPessoa, Pessoas pessoa) {
-        pessoa.getEndereco().setLogradouro(newPessoa.getEndereco().getLogradouro());
-        pessoa.getEndereco().setCep(newPessoa.getEndereco().getCep());
-        pessoa.getEndereco().setNumero(newPessoa.getEndereco().getNumero());
-        pessoa.getEndereco().setCidade(newPessoa.getEndereco().getCidade());
-        pessoa.getEndereco().setEnderecoPrincial(newPessoa.getEndereco().isEnderecoPrincial());
-    }
-     */
-
-
     public void deletaPessoa(Long id) {
-        pessoasRespository.deleteById(id);
+        pessoaRepository.deleteById(id);
     }
 
     public Optional<List<Endereco>> listarEnderecosPessoa(Long id) {
-        return pessoasRespository.findById(id)
-                .map(Pessoas::getEndereco);
+        return pessoaRepository.findById(id)
+                .map(Pessoas::getEnderecos);
     }
 
     public Optional<Endereco> listarEnderecoPrincipal(Long id) {
-        Pessoas pessoa = pessoasRespository.findById(id).orElse(null);
+        Pessoas pessoa = pessoaRepository.findById(id).orElse(null);
         assert pessoa != null;
-        Stream<Endereco> endereco = pessoa.getEndereco().stream().filter(Endereco::isEnderecoPrincial);
+        Stream<Endereco> endereco = pessoa.getEnderecos().stream().filter(Endereco::isEnderecoPrincial);
         return endereco.findAny();
     }
+
+    public Endereco criarEnderecoParaPessoa(Long id, Endereco newEndereco) {
+        pessoaRepository.findById(id)
+                .map(pessoa -> {
+                    pessoa.getEnderecos().add(newEndereco);
+                    return pessoaRepository.save(pessoa);
+                });
+        return newEndereco;
+    }
+
 }
 
 
