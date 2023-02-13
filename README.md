@@ -18,3 +18,12 @@ O sistema de back-end foi desenvolvido com a tecnologia Spring Boot, para compil
 - `POST` -Adicionar uma pessoa -> `localhost:8080/pessoas`
 - `PUT`  -Editar uma pessoa -> `localhost:8080/pessoas/{id}`
 - `DELETE` - Excluir uma pessoa -> `localhost:8080/pessoas/{id}`
+
+## Perguntas:
+- Durante a implementação de uma nova funcionalidade de software solicitada, quais critérios você avalia e implementa para garantia de qualidade de software?
+
+Acredito que na implementação de uma nova funcionalidade deve-se levar em consideração vários critérios como a atenção ao requisitos que foram passados, para entender bem o que foi solicitado, testes da nova implementação para garantir que o que foi solicitado vai ser entregue, uma boa escrita de código para que manutenção desse código seja feita da forma mais simples possível, esses são alguns critérios que eu considero importante.
+
+- Em qual etapa da implementação você considera a qualidade de software?
+
+A qualidade de software deve ser levada em consideração desde o inicio da implementação, pois assim desde o planejamento dessa nova implementação ja é possível diminuir os riscos e bugs que ela pode causar, visando um resultado mais perto do esperado.
