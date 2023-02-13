@@ -1,4 +1,4 @@
-package com.sandrini.backendattornatus;
+package com.sandrini.backendattornatus.Testes;
 
 
 import com.sandrini.backendattornatus.models.Endereco;
