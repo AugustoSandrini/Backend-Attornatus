@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -17,9 +17,13 @@ public class Pessoas {
 
     private String nome;
 
-    private LocalDate dataNascimento;
+    private String dataNascimento;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Endereco> enderecos;
+
+    public Pessoas(){
+        enderecos = new ArrayList<>();
+    }
 
 }
